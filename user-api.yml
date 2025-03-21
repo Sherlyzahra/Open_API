@@ -3,7 +3,7 @@ info:
   title: API Title
   version: '1.0'
 servers:
-  - url: http://api.server.test/v1
+  - url: http://localhost:4000
 
 components:
   schemas:
@@ -105,3 +105,30 @@ paths:
               application/json:
                 schema:
                   $ref: '#/components/schemas/user'
+  /user:
+    post:
+      description: 'endpoint untuk menambahkan data user'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                age:
+                  type: integer
+      parameters: []
+      responses:
+        '200':
+          description: berhasil
+          content:
+              application/json:
+                schema:
+                 $ref: '#/components/schemas/user'
+        '500':
+          description: Server Gagal
+        '403':
+          description: Tidak diijinkan

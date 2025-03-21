@@ -18,9 +18,61 @@ app.get('/users', (req, res) => {
             res.status(500).send('Internal Server Error');
             return;
         }
-
         res.json(results);
     });
 });
-    app.listen(3000, () => console.log('Server berjalan di http://localhost:3000'));
 
+app.get('/users/:id', (req, res) => {
+        const id = req.params.id;
+        db.query('SELECT * FROM users WHERE id = ?', [id], (err, results) => {
+            if (err) {
+                res.status(500).send('Internal Server Error');
+                return;
+            }
+    
+            res.json(results);
+        });
+    });
+
+app.put('/users/:id', (req, res) => {
+        const id = req.params.id;
+        const name = req.query.name;
+        const email = req.query.email;
+        const age = req.query.age;
+        db.query('UPDATE users SET name = ?, email = ?, age = ? WHERE id = ?', [name, email, age, id], (err, results) => {
+            if (err) {
+                res.status(500).send('Internal Server Error');
+                return;
+            }
+    
+            res.json(results);
+        });
+    });
+
+app.delete('/users/:id', (req, res) => {
+        const id = req.params.id;
+        db.query('DELETE FROM users WHERE id = ?', [id], (err, results) => {
+            if (err) {
+                res.status(500).send('Internal Server Error');
+                return;
+            }
+    
+            res.json(results);
+        });
+    });
+
+app.post('/user', (req, res) => {
+        const name = req.body.name;
+        const email = req.body.email;
+        const age = req.body.age;
+        db.query('INSERT INTO users (name, email, age) VALUES (?, ?, ?)', [name, email, age, id], (err, results) => {
+            if (err) {
+                res.status(500).send('Internal Server Error');
+                return;
+            }
+    
+            res.json(results);
+        });
+    });
+
+    app.listen(4000, () => console.log('Server berjalan di http://localhost:4000'));
